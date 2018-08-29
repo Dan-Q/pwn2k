@@ -1,15 +1,15 @@
-# pwn-2-k
+# pwn2k
 
 > Sofa-based multiplayer BYOB hacking simulator game.
 
 ## About
 
-Experimental. Not ready for non-developer use.
+Experimental. Not ready for non-developer use. Not really ready for developer use either.
 
 ## Getting Started
 
 1. npm i
-3. npm run dev
+2. npm run dev
 
 ## License
 
