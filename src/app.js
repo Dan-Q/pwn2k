@@ -10,6 +10,12 @@ const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
 const socketio = require('@feathersjs/socketio');
 const memory = require('feathers-memory');
+const NeDB = require('nedb');
+const NeDBService = require('feathers-nedb');
+const Model = new NeDB({
+  filename: './game-state.db',
+  autoload: true
+});
 
 const middleware = require('./middleware');
 const services = require('./services');
@@ -51,7 +57,8 @@ app.hooks(appHooks);
 
 
 /**********************************************************************************/
-app.use('/messages', memory());
+//app.use('/messages', memory());
+app.use('/messages', NeDBService({ Model }));
 // Add any new real-time connection to the `everybody` channel
 app.on('connection', connection => app.channel('everybody').join(connection));
 // Publish all events to the `everybody` channel

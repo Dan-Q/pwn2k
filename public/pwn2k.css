@@ -1,7 +1,57 @@
 * {
   box-sizing: border-box;
+  margin: 0;
 }
 
 body {
   background: white;
 }
+
+/* Network screen */
+
+.network-wrapper {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-columns: 1380fr 540fr;
+  grid-template-rows: 540fr 540fr;
+  grid-template-areas: "map  players"
+                       "map  news";
+}
+
+.network-map {
+  grid-area: map;
+  padding: 3vh 3vw;
+  display: grid;
+  align-content: stretch;
+  grid-template-columns: 120fr 6fr 120fr 6fr 120fr 6fr 120fr 6fr 120fr 6fr 120fr 6fr 120fr 6fr 120fr;
+  grid-template-rows:    120fr 8fr 120fr 8fr 120fr 8fr 120fr 8fr 120fr 8fr 120fr 8fr 120fr 8fr 120fr;
+  grid-template-areas:   "00   00a 01    01a 02    02a 03    03a 04    04a 05    05a 06    06a 07"
+                         "00b  .   01b   .   02b   .   03b   .   04b   .   05b   .   06b   .   07b"
+                         "10   10a 11    11a 12    12a 13    13a 14    14a 15    15a 16    16a 17"
+                         "10b  .   11b   .   12b   .   13b   .   14b   .   15b   .   16b   .   17b"
+                         "20   20a 21    21a 22    22a 23    23a 24    24a 25    25a 26    26a 27"
+                         "20b  .   21b   .   22b   .   23b   .   24b   .   25b   .   26b   .   27b"
+                         "30   30a 31    31a 32    32a 33    33a 34    34a 35    35a 36    36a 37"
+                         "30b  .   31b   .   32b   .   33b   .   34b   .   35b   .   36b   .   37b"
+                         "40   40a 41    41a 42    42a 43    43a 44    44a 45    45a 46    46a 47"
+                         "40b  .   41b   .   42b   .   43b   .   44b   .   45b   .   46b   .   47b"
+                         "50   50a 51    51a 52    52a 53    53a 54    54a 55    55a 56    56a 57"
+                         "50b  .   51b   .   52b   .   53b   .   54b   .   55b   .   56b   .   57b"
+                         "60   60a 61    61a 62    62a 63    63a 64    64a 65    65a 66    66a 67"
+                         "60b  .   61b   .   62b   .   63b   .   64b   .   65b   .   66b   .   67b"
+                         "70   70a 71    71a 72    72a 73    73a 74    74a 75    75a 76    76a 77";
+}
+
+.network-players {
+  grid-area: players;
+  background: #fee;
+  padding: 3vh 3vw;
+}
+
+.network-news {
+  grid-area: news;
+  background: #efe;
+  padding: 3vh 3vw;
+}
+

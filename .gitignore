@@ -110,3 +110,6 @@ $RECYCLE.BIN/
 # Others
 lib/
 data/
+
+# Game state data
+game-state.db
