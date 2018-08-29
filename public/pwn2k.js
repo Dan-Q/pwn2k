@@ -6,9 +6,11 @@ app.configure(feathers.socketio(socket));
 // Get the messages service that talks to the server
 const messages = app.service('messages');
 
-// Get (or generate) a unique identifier for "me"
-function generateId() {
+function deleteAllCookies(){
+  document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
 }
+
+// Get (or generate) a unique identifier for "me"
 function getOrGenerateId(){
   let result;
   if(/^id=\d+\-[0-9a-f]+$/.test(document.cookie)){
@@ -29,12 +31,22 @@ console.log(`My ID: ${id}`);
 let idLoggedIn = false;
 let players = new Map();
 
+function me(){
+  const player = players.get(id);
+  if(!player){ deleteAllCookies(); window.location.reload(); }
+  return player;
+}
+
 function handleMessage(message){
   if(message.type == 'log-in'){
     if(message.id == id) idLoggedIn = true; // if I see my own ID logging in, I'm logged-in!
-    players.set(id, { id: message.id });
+    let newPlayer = { id: message.id };
+    newPlayer.mode = ((players.size == 0) ? 'network' : 'hacker'); // first player is the network screen
+    players.set(message.id, newPlayer);
+    console.log('log-in', newPlayer);
+  } else {
+    console.log('unidentified message', message);
   }
-  console.log(message);
 }
 
 // Handle any future messages
