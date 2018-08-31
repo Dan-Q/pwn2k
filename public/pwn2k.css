@@ -70,6 +70,7 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  background-size: cover;
 }
 
 .network-wrapper .system .system-name {

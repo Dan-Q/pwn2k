@@ -4,7 +4,8 @@
     "system": {
       "name": "Demonic Internet",
       "tags": ["indial"],
-      "security": [{ "type": "password", "strength": 9 }]
+      "security": [{ "type": "password", "strength": 9 }],
+      "style": "background: #ffffff; color: #ff0000;"
     }
   },
 
@@ -13,7 +14,8 @@
     "system": {
       "name": "Virginal Broadband",
       "tags": ["indial", "easy"],
-      "security": [{ "type": "password", "strength": 7 }]
+      "security": [{ "type": "password", "strength": 7 }],
+      "style": "background: #322332; color: #ff0000;"
     }
   },
 
@@ -22,16 +24,8 @@
     "system": {
       "name": "A. O. Hell.",
       "tags": ["indial", "easy"],
-      "security": [{ "type": "password", "strength": 7 }]
-    }
-  },
-
-  {
-    "type": "system",
-    "system": {
-      "name": "Luxinet",
-      "tags": ["indial", "easy"],
-      "security": [{ "type": "password", "strength": 8 }]
+      "security": [{ "type": "password", "strength": 7 }],
+      "style": "background: #f9f9fa; color: #000000;"
     }
   },
 
@@ -40,7 +34,8 @@
     "system": {
       "name": "Beaty Broadband",
       "tags": ["indial"],
-      "security": [{ "type": "password", "strength": 9 }]
+      "security": [{ "type": "password", "strength": 9 }],
+      "style": "background: #ffffff; color: #049cd7;"
     }
   },
 
@@ -49,7 +44,8 @@
     "system": {
       "name": "Arnold & Arnold",
       "tags": ["indial"],
-      "security": [{ "type": "password", "strength": 10 }]
+      "security": [{ "type": "password", "strength": 10 }],
+      "style": "background: #ffffff; color: #0d007f;"
     }
   },
 
@@ -58,7 +54,8 @@
     "system": {
       "name": "Everything Everytime",
       "tags": [],
-      "security": [{ "type": "password", "strength": 9 }]
+      "security": [{ "type": "password", "strength": 9 }],
+      "style": "background: #007b85; color: #ffffff;"
     }
   },
 
@@ -67,7 +64,8 @@
     "system": {
       "name": "Tea-Mobile",
       "tags": [],
-      "security": [{ "type": "password", "strength": 9 }]
+      "security": [{ "type": "password", "strength": 9 }],
+      "style": "background: #fe00b8; color: #ffffff;"
     }
   },
 
@@ -76,7 +74,8 @@
     "system": {
       "name": "Vaderfone",
       "tags": [],
-      "security": [{ "type": "password", "strength": 8 }]
+      "security": [{ "type": "password", "strength": 8 }],
+      "style": "background: #e60000; color: #ffffff;"
     }
   },
 
@@ -85,7 +84,8 @@
     "system": {
       "name": "DatingCupid",
       "tags": [],
-      "security": [{ "type": "password", "strength": 8 }]
+      "security": [{ "type": "password", "strength": 8 }],
+      "style": "background: #f3f5f9; color: #104da1;"
     }
   },
 
@@ -94,7 +94,8 @@
     "system": {
       "name": "Mashley Addison",
       "tags": ["easy"],
-      "security": [{ "type": "password", "strength": 6 }]
+      "security": [{ "type": "password", "strength": 6 }],
+      "style": "background-image: url(data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAeAAD/4QMraHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPg0KCTxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+DQoJCTxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjA3RkM0Q0ZCQUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjA3RkM0Q0ZDQUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIj4NCgkJCTx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA3RkM0Q0Y5QUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjA3RkM0Q0ZBQUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIi8+DQoJCTwvcmRmOkRlc2NyaXB0aW9uPg0KCTwvcmRmOlJERj4NCjwveDp4bXBtZXRhPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDw/eHBhY2tldCBlbmQ9J3cnPz7/7gAOQWRvYmUAZMAAAAAB/9sAhAAQCwsLDAsQDAwQFw8NDxcbFBAQFBsfFxcXFxcfHhcaGhoaFx4eIyUnJSMeLy8zMy8vQEBAQEBAQEBAQEBAQEBAAREPDxETERUSEhUUERQRFBoUFhYUGiYaGhwaGiYwIx4eHh4jMCsuJycnLis1NTAwNTVAQD9AQEBAQEBAQEBAQED/wAARCABRAIQDASIAAhEBAxEB/8QAZQAAAwEBAQEAAAAAAAAAAAAAAAEDAgQFBgEBAQEBAQAAAAAAAAAAAAAAAQIAAwQQAQEAAwEAAwADAAAAAAAAAAABEQISAyEiE0FRBBEBAQEAAwEAAAAAAAAAAAAAAAERIQISMf/aAAwDAQACEQMRAD8A+u5LlXBfDz49PpK6MXReyFZBYZ2QuhcLWQsQYr0jdGfzXuGcwYfSX5n+amYMxsh2sfkV8ZVOofUbINrj9P8AM5t/Cx6lsqXppKL1ip3rzLrhjbX4dfp54qO2qcXuuPj7B0cfILPe/Qv0TmtbmtdNrhkPsdDkcty3BdM3Zrkrox4Q33sYnqp66Yjj33xthz7WxnZN8nmp+H2i/BnKtieaM1TgcHG2MZoypwV1bG2Of01y5ttXbvq5t9RYqVHkN4AL2OD5O7RPb0jtw802tfBfCV9B2NV5quIMRObn23DZWPefWvK9c9vT9rmODfzt3y5d/qpHT/knxHZhzf55zHT1F9fgujBC7M3YtDDF2LoarD2iHpot0zt8gzhyc/YK8fYDDro39kv0tqV2ta0O0zrJHRrMtcl51VUiLeU8NSHhqQ4m1O6ZTvjMunBWDy07ITXB/Kl1LkYdTzStqnJcth2J3LNtV4K6DFSxLJyndCkwxtjeJjIL+AUIYajWCwMXqmlwpNkJcD9MHU2a6Zs3NnH+0anvP7PoXpXXksuee8/s/wBodT5q2QlPWNTeM2N4GCmzWWBYGDDMxdWLqpU9qKqDHwGew2tlYKgMqM1PYBNXGKUABajcAKWtVdQDE1XVuAKiK0VAYM1LcAVUT/kAJW//2Q==); color: #000000;"
     }
   },
 

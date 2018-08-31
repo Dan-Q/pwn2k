@@ -127,15 +127,14 @@ function setup(){
 function renderSystem(x, y){
   const node = $(`.network-map-system-${y}${x}`);
   if(!node) return;
-  if(systems[x][y]){
-    node.innerHTML = `
-      <div class="system">
-        <div class="system-name">${systems[x][y].name}</div>
-      </div>
-    `;
-  } else {
-    node.innerHTML = '';
-  }
+  const system = systems[x][y];
+  if(!system) { node.innerHTML = ''; return; }
+  node.innerHTML = `
+    <div class="system" style="${system.style}">
+      <div class="system-name">${system.name}</div>
+      ${system.tags.includes('indial') ? '<i class="fas fa-phone-square fa-2x"></i>' : ''}
+    </div>
+  `;
 }
 
 function renderConnections(){
