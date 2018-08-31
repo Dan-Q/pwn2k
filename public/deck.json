@@ -1,0 +1,106 @@
+[
+  {
+    "type": "system",
+    "system": {
+      "name": "Demonic Internet",
+      "tags": ["indial"],
+      "security": [{ "type": "password", "strength": 9 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Virginal Broadband",
+      "tags": ["indial", "easy"],
+      "security": [{ "type": "password", "strength": 7 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "A. O. Hell.",
+      "tags": ["indial", "easy"],
+      "security": [{ "type": "password", "strength": 7 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Luxinet",
+      "tags": ["indial", "easy"],
+      "security": [{ "type": "password", "strength": 8 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Beaty Broadband",
+      "tags": ["indial"],
+      "security": [{ "type": "password", "strength": 9 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Arnold & Arnold",
+      "tags": ["indial"],
+      "security": [{ "type": "password", "strength": 10 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Everything Everytime",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 9 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Tea-Mobile",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 9 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Vaderfone",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 8 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "DatingCupid",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 8 }]
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Mashley Addison",
+      "tags": ["easy"],
+      "security": [{ "type": "password", "strength": 6 }]
+    }
+  },
+
+  {
+    "type": "placeholder",
+    "title": "Placeholder card",
+    "text": "Just a placeholder card. Doesn't really do anything at all."
+  }
+]

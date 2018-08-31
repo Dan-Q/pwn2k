@@ -14,6 +14,18 @@ app.configure(feathers.socketio(socket));
 // Get the messages service that talks to the server
 const messages = app.service('messages');
 
+// Fisher-Yates shuffle
+function shuffle(array){
+  let m = array.length, t, i;
+  while (m) {
+    i = Math.floor(Math.random() * m--);
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+  return array;
+}
+
 function deleteAllCookies(){
   document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
 }
@@ -42,6 +54,7 @@ let gameState = 'setup';
 let myMode = 'loading';
 let players = new Map();
 let catchingUp = true; // are we handling messages in catch-up mode?
+let deck;
 
 function me(){
   const player = players.get(id);
@@ -73,10 +86,26 @@ function setup(){
       // Synchronise a global RNG
       const globalRngSeed = Math.seedrandom();
       messages.create({ type: 'seed-rng', seed: globalRngSeed });
-      // TODO: shuffle deck (and tell others to do so too, using global seed)
-      // TODO: get initial cards into play
+      // Get and shuffle deck
+      fetch('deck.json').then(r=>r.json()).then(json=>{
+        deck = shuffle(json);
+        console.log('Loading deck:', deck);
+      });
+      // TODO: get initial cards into play - we need 5 systems of which at least one must be an easy indial, so we cycle the deck 'til we find some
+      let drawn = [];
+      while(drawn.length < 5){
+        let draw = deck.shift();
+        if((draw.type == 'system') && true){ // TODO: add more criteria here
+          // looks good - add to drawn
+          drawn.push(draw);
+        } else {
+          // return to bottom of deck
+          deck.push(draw);
+        }
+      }
+      // TODO: share deck state with other players
       // Change state of game
-      messages.create({ type: 'game-state', state: 'paused' });
+      // messages.create({ type: 'game-state', state: 'paused' });
     }
   }
 }
