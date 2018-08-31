@@ -15,10 +15,10 @@ app.configure(feathers.socketio(socket));
 const messages = app.service('messages');
 
 // Fisher-Yates shuffle
-function shuffle(array){
+function shuffle(array, randomFunction = localRng){
   let m = array.length, t, i;
   while (m) {
-    i = Math.floor(Math.random() * m--);
+    i = Math.floor(randomFunction() * m--);
     t = array[m];
     array[m] = array[i];
     array[i] = t;
@@ -55,6 +55,7 @@ let myMode = 'loading';
 let players = new Map();
 let catchingUp = true; // are we handling messages in catch-up mode?
 let deck;
+let systems = [[], [], [], [], [], [], [], []];
 
 function me(){
   const player = players.get(id);
@@ -63,6 +64,7 @@ function me(){
 }
 
 function handleMessage(message){
+  console.log('Message: ', message);
   if(message.type == 'log-in'){
     if(message.id == id) idLoggedIn = true; // if I see my own ID logging in, I'm logged-in!
     let newPlayer = { id: message.id };
@@ -74,6 +76,10 @@ function handleMessage(message){
   } else if(message.type == 'seed-rng'){
     globalRng = new Math.seedrandom(message.seed);
     console.log('globalRng() seeded')
+  } else if(message.type == 'add-system'){
+    systems[message.x][message.y] = message.system;
+    renderSystem(message.x, message.y);
+    renderConnections();
   } else {
     console.log('unidentified message', message);
   }
@@ -83,36 +89,71 @@ function setup(){
   if(myMode == 'network'){
     if(gameState == 'setup'){
       // I am the network; it's my job to set up the game!
-      // Synchronise a global RNG
-      const globalRngSeed = Math.seedrandom();
-      messages.create({ type: 'seed-rng', seed: globalRngSeed });
-      // Get and shuffle deck
-      fetch('deck.json').then(r=>r.json()).then(json=>{
-        deck = shuffle(json);
+      (async ()=>{
+        // Synchronise a global RNG
+        const globalRngSeed = Math.seedrandom();
+        messages.create({ type: 'seed-rng', seed: globalRngSeed });
+        // Get and shuffle deck
+        deck = await fetch('deck.json').then(r=>r.json());
+        deck = shuffle(deck);
         console.log('Loading deck:', deck);
-      });
-      // TODO: get initial cards into play - we need 5 systems of which at least one must be an easy indial, so we cycle the deck 'til we find some
-      let drawn = [];
-      while(drawn.length < 5){
-        let draw = deck.shift();
-        if((draw.type == 'system') && true){ // TODO: add more criteria here
-          // looks good - add to drawn
-          drawn.push(draw);
-        } else {
-          // return to bottom of deck
-          deck.push(draw);
+        // TODO: get initial cards into play - we need 5 systems of which at least one must be an easy indial, so we cycle the deck 'til we find some
+        let initialSystems = [];
+        while(initialSystems.length < 5){
+          let draw = deck.shift();
+          if((draw.type == 'system') && true){ // TODO: add more criteria here
+            // looks good - add to initialSystems
+            initialSystems.push(draw.system);
+          } else {
+            // return to bottom of deck
+            deck.push(draw);
+          }
         }
-      }
-      // TODO: share deck state with other players
-      // Change state of game
-      // messages.create({ type: 'game-state', state: 'paused' });
+        console.log('Initial network draw:', initialSystems);
+        // TODO: place initial systems on the board
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 3 }); // pattern:
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 4 }); //
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 3 }); // a b
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 4 }); // c d e
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 5, y: 4 });
+        // TODO: share deck state with other players
+        // Wait a moment for messages to propogate, then change state of game
+        // setTimeout(()=>{ messages.create({ type: 'game-state', state: 'paused' }); }, 150);
+      })();
     }
   }
+}
+
+function renderSystem(x, y){
+  const node = $(`.network-map-system-${y}${x}`);
+  if(!node) return;
+  if(systems[x][y]){
+    node.innerHTML = `
+      <div class="system">
+        <div class="system-name">${systems[x][y].name}</div>
+      </div>
+    `;
+  } else {
+    node.innerHTML = '';
+  }
+}
+
+function renderConnections(){
+}
+
+function renderNetwork(){
+  for(let y = 0; y < 8; y++){
+    for(let x = 0; x < 8; x++){
+      renderSystem(x, y);
+    }
+  }
+  renderConnections();
 }
 
 function renderFull(){
   // render network.html / hacker.html as appropriate
   fetch(`${myMode}.html`).then(d=>d.text()).then(d=>$('main').innerHTML=d);
+  renderNetwork();
 }
 
 // Handle any future messages
