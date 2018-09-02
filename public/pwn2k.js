@@ -56,6 +56,13 @@ let players = new Map();
 let catchingUp = true; // are we handling messages in catch-up mode?
 let deck;
 let systems = [[], [], [], [], [], [], [], []];
+let connections = [[[false, false], [false, false], [false, false], [false, false], [false, false], [false, false], [false, false]],
+                   [[false, false], [false, false], [false, false], [false, false], [false, false], [false, false], [false, false]],
+                   [[false, false], [false, false], [false, false], [false, false], [false, false], [false, false], [false, false]],
+                   [[false, false], [false, false], [false, false], [false, false], [false, false], [false, false], [false, false]],
+                   [[false, false], [false, false], [false, false], [false, false], [false, false], [false, false], [false, false]],
+                   [[false, false], [false, false], [false, false], [false, false], [false, false], [false, false], [false, false]],
+                   [[false, false], [false, false], [false, false], [false, false], [false, false], [false, false], [false, false]]]
 
 function me(){
   const player = players.get(id);
@@ -79,6 +86,11 @@ function handleMessage(message){
   } else if(message.type == 'add-system'){
     systems[message.x][message.y] = message.system;
     renderSystem(message.x, message.y);
+  } else if(message.type == 'update-connections'){
+    connections = message.connections;
+    renderConnections();
+  } else if(message.type == 'set-deck'){
+    deck = message.deck;
     renderConnections();
   } else {
     console.log('unidentified message', message);
@@ -97,11 +109,12 @@ function setup(){
         deck = await fetch('deck.json').then(r=>r.json());
         deck = shuffle(deck);
         console.log('Loading deck:', deck);
-        // TODO: get initial cards into play - we need 5 systems of which at least one must be an easy indial, so we cycle the deck 'til we find some
+        // Get initial cards into play - we need 5 systems of which at least one must be an easy indial, so we cycle the deck 'til we find some
         let initialSystems = [];
         while(initialSystems.length < 5){
-          let draw = deck.shift();
-          if((draw.type == 'system') && true){ // TODO: add more criteria here
+          const draw = deck.shift();
+          const haveAnIndial = initialSystems.find(s=>s.tags.includes('indial'));
+          if((draw.type == 'system') && (haveAnIndial || draw.system.tags.includes('indial'))){ // we require 1+ indials
             // looks good - add to initialSystems
             initialSystems.push(draw.system);
           } else {
@@ -109,16 +122,25 @@ function setup(){
             deck.push(draw);
           }
         }
+        initialSystems = shuffle(initialSystems); // re-order initial systems so the indial isn't ALWAYS top-left
         console.log('Initial network draw:', initialSystems);
-        // TODO: place initial systems on the board
+        // Place initial systems on the board with full connections between them
         messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 3 }); // pattern:
         messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 4 }); //
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 3 }); // a b
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 4 }); // c d e
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 5, y: 4 });
-        // TODO: share deck state with other players
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 3 }); // a-b
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 4 }); // | |
+        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 5, y: 4 }); // c-d-e
+        connections[3][3][0] = true; // a-to-b
+        connections[3][3][1] = true; // a-to-c
+        connections[3][4][1] = true; // b-to-d
+        connections[4][3][0] = true; // c-to-d
+        connections[4][4][0] = true; // d-to-e
+        messages.create({ type: 'update-connections', connections: connections });
+        // TODO: ensure a further indial is placed close to the top of the deck
+        // Share deck state with other players
+        messages.create({ type: 'set-deck', deck: deck });
         // Wait a moment for messages to propogate, then change state of game
-        // setTimeout(()=>{ messages.create({ type: 'game-state', state: 'paused' }); }, 150);
+        setTimeout(()=>{ messages.create({ type: 'game-state', state: 'paused' }); }, 150);
       })();
     }
   }
@@ -138,6 +160,16 @@ function renderSystem(x, y){
 }
 
 function renderConnections(){
+  for(let y = 0; y < 7; y++){
+    for(let x = 0; x < 7; x++){
+      const cellA = $(`.network-map-connection-${x}${y}a`)
+      const connectedA = connections[x][y][0];
+      const cellB = $(`.network-map-connection-${x}${y}b`)
+      const connectedB = connections[x][y][1];
+      if(cellA) cellA.innerHTML = connectedA ? '<div class="connection"></div>' : '';
+      if(cellB) cellB.innerHTML = connectedB ? '<div class="connection"></div>' : '';
+    }
+  }
 }
 
 function renderNetwork(){
@@ -151,8 +183,11 @@ function renderNetwork(){
 
 function renderFull(){
   // render network.html / hacker.html as appropriate
-  fetch(`${myMode}.html`).then(d=>d.text()).then(d=>$('main').innerHTML=d);
-  renderNetwork();
+  console.log(`renderFull() with mode ${myMode}`);
+  fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
+    $('main').innerHTML = d;
+    renderNetwork();
+  });
 }
 
 // Handle any future messages

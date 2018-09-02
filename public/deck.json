@@ -92,6 +92,45 @@
   {
     "type": "system",
     "system": {
+      "name": "Equifux",
+      "tags": ["easy"],
+      "security": [{ "type": "password", "strength": 7 }],
+      "style": "background: #ffffff; color: #b20837;"
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Net-flicks",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 9 }],
+      "style": "background: #000000; color: #e50913;"
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Steem",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 9 }],
+      "style": "background: #0c294a; color: #ffffff;"
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "YourSpace",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 8 }],
+      "style": "background: #0037c1; color: #ffffff;"
+    }
+  },
+  {
+    "type": "system",
+    "system": {
       "name": "Mashley Addison",
       "tags": ["easy"],
       "security": [{ "type": "password", "strength": 6 }],
