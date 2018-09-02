@@ -181,12 +181,22 @@ function renderNetwork(){
   renderConnections();
 }
 
-function renderFull(){
+function renderFull(){ // TODO: consider making this a Promise so we can chain it
   // render network.html / hacker.html as appropriate
   console.log(`renderFull() with mode ${myMode}`);
   fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
     $('main').innerHTML = d;
     renderNetwork();
+    // check if there's any post-render setup to be done
+    if (myMode == 'hacker') {
+      if((me().name || '') == '') {
+        fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
+          $('main').innerHTML = d;
+          $('#modal-identity').classList.add('active'); // show identity dialog
+          $('#hacker-name').focus();                      // focus name field
+        });
+      }
+    }
   });
 }
 
