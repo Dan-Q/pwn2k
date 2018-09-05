@@ -85,6 +85,7 @@ function handleMessage(message){
     newPlayer.mode = ((players.size == 0) ? 'network' : 'hacker'); // first player is the network screen
     players.set(message.id, newPlayer);
     console.log('log-in', newPlayer);
+    if(!catchingUp) renderPlayerList();
   } else if(message.type == 'game-state'){
     gameState = message.state;
   } else if(message.type == 'seed-rng'){
@@ -92,17 +93,18 @@ function handleMessage(message){
     console.log('globalRng() seeded')
   } else if(message.type == 'add-system'){
     systems[message.x][message.y] = message.system;
-    renderSystem(message.x, message.y);
+    if(!catchingUp) renderSystem(message.x, message.y);
   } else if(message.type == 'update-connections'){
     connections = message.connections;
-    renderConnections();
+    if(!catchingUp) renderConnections();
   } else if(message.type == 'set-deck'){
     deck = message.deck;
-    renderConnections();
+    if(!catchingUp) renderConnections();
   } else if(message.type == 'set-hacker-attributes'){
-    const hacker = players[message.id];
-    for(let [prop, value] of message.attributes) hacker[prop] = value;
-    renderPlayerList();
+    const hacker = players.get(message.id);
+    if(!hacker) return;
+    for(let [prop, value] of new Map(message.attributes)) hacker[prop] = value;
+    if(!catchingUp) renderPlayerList();
   } else {
     console.log('unidentified message', message);
   }
@@ -195,19 +197,15 @@ function renderNetwork(){
 function renderPlayerList(){
   if (myMode == 'network') {
     let htmlPlayers = [];
-    for(player of players){
-      htmlPlayers.push(player.id);
-    }
-    htmlPlayers.sort((a,b)=>(a.cred||0)>(b.cred||0)> ? 1 : -1);
-    $('.network-players').innerHTML = htmlPlayers.join("\n");
+    for(player of players.values()){ if(player.name) htmlPlayers.push(player); }
+    htmlPlayers.sort((a,b)=>(a.cred||0)<(b.cred||0) ? 1 : -1);
+    htmlPlayers = htmlPlayers.map(player => `<tr><td>${player.name}</td><td>${player.cred || 0}</td></tr>`);
+    $('.network-players-list').innerHTML = htmlPlayers.join("\n");
   } else if (myMode == 'hacker') {
     // do I need to provide my name?
     if((me().name || '') == '') {
-      fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
-        $('main').innerHTML = d;
-        $('#modal-identity').classList.add('active');  // show identity dialog
-        $('#hacker-name').focus();                     // focus name field
-      });
+      $('#modal-identity').classList.add('active');  // show identity dialog
+      $('#hacker-name').focus();                     // focus name field
     } else {
       $('#modal-identity').classList.remove('active'); // don't show identity dialog
     }
@@ -219,8 +217,12 @@ function renderFull(){ // TODO: consider making this a Promise so we can chain i
   console.log(`renderFull() with mode ${myMode}`);
   fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
     $('main').innerHTML = d;
+    if(myMode == 'network'){
+      $('.join-game-url').innerText = window.location.href;
+    }
     renderNetwork();
     renderPlayerList();
+    setupHandlers();
   });
 }
 
@@ -240,10 +242,13 @@ messages.on('created', message => handleMessage(message));
   renderFull();
 })();
 
-// Set name
-$('#submit-hacker-name').addEventListener('pointerup', ()=>{
-  const newName = escapeHtml($('#hacker-name').value.trim());
-  if(newName == '') return;
-  messages.create({ type: 'set-hacker-attributes', id: id, attributes: { new Map([['name', newName]]) } });
-});
-
+function setupHandlers(){
+  if(myMode == 'hacker'){
+    // Set name
+    $('#submit-hacker-name').addEventListener('pointerup', ()=>{
+      const newName = escapeHtml($('#hacker-name').value.trim());
+      if(newName == '') return;
+      messages.create({ type: 'set-hacker-attributes', id: id, attributes: [['name', newName]] });
+    });
+  }
+}
