@@ -14,6 +14,13 @@ app.configure(feathers.socketio(socket));
 // Get the messages service that talks to the server
 const messages = app.service('messages');
 
+// HTML escaping
+function escapeHtml(str) {
+  let div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
 // Fisher-Yates shuffle
 function shuffle(array, randomFunction = localRng){
   let m = array.length, t, i;
@@ -92,6 +99,10 @@ function handleMessage(message){
   } else if(message.type == 'set-deck'){
     deck = message.deck;
     renderConnections();
+  } else if(message.type == 'set-hacker-attributes'){
+    const hacker = players[message.id];
+    for(let [prop, value] of message.attributes) hacker[prop] = value;
+    renderPlayerList();
   } else {
     console.log('unidentified message', message);
   }
@@ -181,22 +192,35 @@ function renderNetwork(){
   renderConnections();
 }
 
+function renderPlayerList(){
+  if (myMode == 'network') {
+    let htmlPlayers = [];
+    for(player of players){
+      htmlPlayers.push(player.id);
+    }
+    htmlPlayers.sort((a,b)=>(a.cred||0)>(b.cred||0)> ? 1 : -1);
+    $('.network-players').innerHTML = htmlPlayers.join("\n");
+  } else if (myMode == 'hacker') {
+    // do I need to provide my name?
+    if((me().name || '') == '') {
+      fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
+        $('main').innerHTML = d;
+        $('#modal-identity').classList.add('active');  // show identity dialog
+        $('#hacker-name').focus();                     // focus name field
+      });
+    } else {
+      $('#modal-identity').classList.remove('active'); // don't show identity dialog
+    }
+  }
+}
+
 function renderFull(){ // TODO: consider making this a Promise so we can chain it
   // render network.html / hacker.html as appropriate
   console.log(`renderFull() with mode ${myMode}`);
   fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
     $('main').innerHTML = d;
     renderNetwork();
-    // check if there's any post-render setup to be done
-    if (myMode == 'hacker') {
-      if((me().name || '') == '') {
-        fetch(`${myMode}.html`).then(d=>d.text()).then(d=>{
-          $('main').innerHTML = d;
-          $('#modal-identity').classList.add('active'); // show identity dialog
-          $('#hacker-name').focus();                      // focus name field
-        });
-      }
-    }
+    renderPlayerList();
   });
 }
 
@@ -215,3 +239,11 @@ messages.on('created', message => handleMessage(message));
   setup();
   renderFull();
 })();
+
+// Set name
+$('#submit-hacker-name').addEventListener('pointerup', ()=>{
+  const newName = escapeHtml($('#hacker-name').value.trim());
+  if(newName == '') return;
+  messages.create({ type: 'set-hacker-attributes', id: id, attributes: { new Map([['name', newName]]) } });
+});
+
