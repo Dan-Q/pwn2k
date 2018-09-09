@@ -134,3 +134,13 @@ body {
   width: 0.4vw;
   background: #777;
 }
+
+/* Hacker screen */
+
+.tabbed-section {
+  display: none;
+}
+
+.tabbed-section.active {
+  display: block;
+}

@@ -208,6 +208,7 @@ function renderPlayerList(){
       $('#hacker-name').focus();                     // focus name field
     } else {
       $('#modal-identity').classList.remove('active'); // don't show identity dialog
+      hackerSwitchToTab('rig'); // switch to rig tab
     }
   }
 }
@@ -242,6 +243,11 @@ messages.on('created', message => handleMessage(message));
   renderFull();
 })();
 
+function hackerSwitchToTab(tabName){
+  for(tab of Array.from($$('.tab-item, .tabbed-section'))) tab.classList.remove('active');
+  for(tab of Array.from($$(`#hacker-${tabName}, #tab-hacker-${tabName}`))) tab.classList.add('active');
+}
+
 function setupHandlers(){
   if(myMode == 'hacker'){
     // Set name
@@ -249,6 +255,13 @@ function setupHandlers(){
       const newName = escapeHtml($('#hacker-name').value.trim());
       if(newName == '') return;
       messages.create({ type: 'set-hacker-attributes', id: id, attributes: [['name', newName]] });
+      hackerSwitchToTab('rig'); // switch to rig tab
     });
+    // Switch tab
+    for(link of Array.from($$('a[data-tab]'))){
+      link.addEventListener('pointerdown', e=>{
+        hackerSwitchToTab(e.currentTarget.dataset['tab']);
+      });
+    }
   }
 }
