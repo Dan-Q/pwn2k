@@ -78,19 +78,17 @@ function me(){
 }
 
 function handleMessage(message){
-  console.log('Message: ', message);
+  console.log(message);
   if(message.type == 'log-in'){
     if(message.id == id) idLoggedIn = true; // if I see my own ID logging in, I'm logged-in!
     let newPlayer = { id: message.id };
-    newPlayer.mode = ((players.size == 0) ? 'network' : 'hacker'); // first player is the network screen
+    newPlayer.mode = ((Array.from(players.values()).filter(p=>p.mode=='network').length == 0) ? 'network' : 'hacker'); // first player is the network screen
     players.set(message.id, newPlayer);
-    console.log('log-in', newPlayer);
     if(!catchingUp) renderPlayerList();
   } else if(message.type == 'game-state'){
     gameState = message.state;
   } else if(message.type == 'seed-rng'){
     globalRng = new Math.seedrandom(message.seed);
-    console.log('globalRng() seeded')
   } else if(message.type == 'add-system'){
     systems[message.x][message.y] = message.system;
     if(!catchingUp) renderSystem(message.x, message.y);
@@ -117,7 +115,7 @@ function setup(){
       (async ()=>{
         // Synchronise a global RNG
         const globalRngSeed = Math.seedrandom();
-        messages.create({ type: 'seed-rng', seed: globalRngSeed });
+        await messages.create({ type: 'seed-rng', seed: globalRngSeed });
         // Get and shuffle deck
         deck = await fetch('deck.json').then(r=>r.json());
         deck = shuffle(deck);
@@ -138,22 +136,22 @@ function setup(){
         initialSystems = shuffle(initialSystems); // re-order initial systems so the indial isn't ALWAYS top-left
         console.log('Initial network draw:', initialSystems);
         // Place initial systems on the board with full connections between them
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 3 }); // pattern:
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 4 }); //
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 3 }); // a-b
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 4 }); // | |
-        messages.create({ type: 'add-system', system: initialSystems.shift(), x: 5, y: 4 }); // c-d-e
+        await messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 3 }); // pattern:
+        await messages.create({ type: 'add-system', system: initialSystems.shift(), x: 3, y: 4 }); //
+        await messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 3 }); // a-b
+        await messages.create({ type: 'add-system', system: initialSystems.shift(), x: 4, y: 4 }); // | |
+        await messages.create({ type: 'add-system', system: initialSystems.shift(), x: 5, y: 4 }); // c-d-e
         connections[3][3][0] = true; // a-to-b
         connections[3][3][1] = true; // a-to-c
         connections[3][4][1] = true; // b-to-d
         connections[4][3][0] = true; // c-to-d
         connections[4][4][0] = true; // d-to-e
-        messages.create({ type: 'update-connections', connections: connections });
+        await messages.create({ type: 'update-connections', connections: connections });
         // TODO: ensure a further indial is placed close to the top of the deck
         // Share deck state with other players
-        messages.create({ type: 'set-deck', deck: deck });
+        await messages.create({ type: 'set-deck', deck: deck });
         // Wait a moment for messages to propogate, then change state of game
-        setTimeout(()=>{ messages.create({ type: 'game-state', state: 'paused' }); }, 150);
+        setTimeout(async ()=>{ await messages.create({ type: 'game-state', state: 'paused' }); }, 150);
       })();
     }
   }
@@ -231,8 +229,10 @@ function renderFull(){ // TODO: consider making this a Promise so we can chain i
 messages.on('created', message => handleMessage(message));
 // Handle all existing messages (synchronously, to prevent double-logging-in)
 (async ()=>{
-  messageLog = await messages.find();
+  console.log(' - catching up -');
+  messageLog = await messages.find({ query: { $sort: { createdAt: 1 } } });
   for(message of messageLog) handleMessage(message);
+  console.log(' - done catching up -');
   catchingUp = false;
 
   // If we're not already logged in, log in
@@ -251,10 +251,10 @@ function hackerSwitchToTab(tabName){
 function setupHandlers(){
   if(myMode == 'hacker'){
     // Set name
-    $('#submit-hacker-name').addEventListener('pointerup', ()=>{
+    $('#submit-hacker-name').addEventListener('pointerup', async ()=>{
       const newName = escapeHtml($('#hacker-name').value.trim());
       if(newName == '') return;
-      messages.create({ type: 'set-hacker-attributes', id: id, attributes: [['name', newName]] });
+      await messages.create({ type: 'set-hacker-attributes', id: id, attributes: [['name', newName]] });
       hackerSwitchToTab('rig'); // switch to rig tab
     });
     // Switch tab
