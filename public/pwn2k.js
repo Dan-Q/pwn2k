@@ -157,17 +157,57 @@ function setup(){
   }
 }
 
+// Hacker: renders a dropdown of systems to choose from
+function renderSystemDropdown(){
+  let systemsForDropdown = new Map();
+  for(let y = 0; y < 8; y++){
+    for(let x = 0; x < 8; x++){
+      if(systems[x][y]) systemsForDropdown.set(systems[x][y].name, `${y}${x}`);
+    }
+  }
+  const previousValue = $('#hacker-net-system-select').value;
+  $('#hacker-net-system-select').innerHTML = Array.from(systemsForDropdown).sort().map(sysInfo => `
+    <option value="${sysInfo[1]}">${sysInfo[0]}</option>
+  `.trim()).join("\n");
+  $('#hacker-net-system-select').value = (previousValue ? previousValue : systemsForDropdown.keys()[0]);
+  renderSystemSelectedByDropdown();
+}
+
+
+// Hacker: renders the system selected by the dropdown
+function renderSystemSelectedByDropdown(){
+  for(let systemToHide of Array.from($$(`.hacker-net-system`))) systemToHide.classList.remove('active');
+  let selectedSystemLocation = $('#hacker-net-system-select').value;
+  if(!selectedSystemLocation) return;
+  $(`.hacker-net-system-${selectedSystemLocation}`).classList.add('active');
+}
+
 function renderSystem(x, y){
-  const node = $(`.network-map-system-${y}${x}`);
-  if(!node) return;
   const system = systems[x][y];
-  if(!system) { node.innerHTML = ''; return; }
-  node.innerHTML = `
-    <div class="system" style="${system.style}">
-      <div class="system-name">${system.name}</div>
-      ${system.tags.includes('indial') ? '<i class="fas fa-phone-square fa-2x"></i>' : ''}
-    </div>
-  `;
+  if(myMode == 'network'){
+    // network view of a system
+    const node = $(`.network-map-system-${y}${x}`);
+    if(!node) return;
+    if(!system) { node.innerHTML = ''; return; }
+    node.innerHTML = `
+      <div class="system" style="${system.style}">
+        <div class="system-name">${system.name}</div>
+        ${system.tags.includes('indial') ? '<i class="fas fa-phone-square fa-2x"></i>' : ''}
+      </div>
+    `;
+  } else {
+    // hacker view of a system
+    const node = $(`.hacker-net-system-${y}${x}`);
+    if(!node) return;
+    if(!system) { node.innerHTML = ''; return; }
+    node.innerHTML = `
+      <div class="system" style="${system.style}">
+        <div class="system-name">${system.name}</div>
+        ${system.tags.includes('indial') ? '<i class="fas fa-phone-square fa-2x"></i>' : ''}
+        <ul class="connections">connections will go here</ul>
+      </div>
+    `;
+  }
 }
 
 function renderConnections(){
@@ -189,6 +229,7 @@ function renderNetwork(){
       renderSystem(x, y);
     }
   }
+  if(myMode == 'hacker') renderSystemDropdown();
   renderConnections();
 }
 
@@ -263,5 +304,7 @@ function setupHandlers(){
         hackerSwitchToTab(e.currentTarget.dataset['tab']);
       });
     }
+    // Switch selected system
+    $('#hacker-net-system-select').addEventListener('change', renderSystemSelectedByDropdown);
   }
 }

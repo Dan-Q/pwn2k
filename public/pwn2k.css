@@ -137,10 +137,12 @@ body {
 
 /* Hacker screen */
 
-.tabbed-section {
+.tabbed-section,
+.hacker-net-system {
   display: none;
 }
 
-.tabbed-section.active {
+.tabbed-section.active,
+.hacker-net-system.active {
   display: block;
 }
