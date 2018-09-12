@@ -162,12 +162,12 @@ function renderSystemDropdown(){
   let systemsForDropdown = new Map();
   for(let y = 0; y < 8; y++){
     for(let x = 0; x < 8; x++){
-      if(systems[x][y]) systemsForDropdown.set(systems[x][y].name, `${y}${x}`);
+      if(systems[x][y]) systemsForDropdown.set(systems[x][y].name, { location: `${y}${x}`, style: systems[x][y].style });
     }
   }
   const previousValue = $('#hacker-net-system-select').value;
   $('#hacker-net-system-select').innerHTML = Array.from(systemsForDropdown).sort().map(sysInfo => `
-    <option value="${sysInfo[1]}">${sysInfo[0]}</option>
+    <option id="hacker-net-system-select-${sysInfo[1].location}" value="${sysInfo[1].location}" data-style="${sysInfo[1].style}">${sysInfo[0]}</option>
   `.trim()).join("\n");
   $('#hacker-net-system-select').value = (previousValue ? previousValue : systemsForDropdown.keys()[0]);
   renderSystemSelectedByDropdown();
@@ -180,6 +180,7 @@ function renderSystemSelectedByDropdown(){
   let selectedSystemLocation = $('#hacker-net-system-select').value;
   if(!selectedSystemLocation) return;
   $(`.hacker-net-system-${selectedSystemLocation}`).classList.add('active');
+  $('#hacker-net-system-select').style = $(`#hacker-net-system-select option#hacker-net-system-select-${selectedSystemLocation}`).dataset['style'];
 }
 
 function renderSystem(x, y){
@@ -201,9 +202,9 @@ function renderSystem(x, y){
     if(!node) return;
     if(!system) { node.innerHTML = ''; return; }
     node.innerHTML = `
-      <div class="system" style="${system.style}">
-        <div class="system-name">${system.name}</div>
-        ${system.tags.includes('indial') ? '<i class="fas fa-phone-square fa-2x"></i>' : ''}
+      <div class="system">
+        <p>${system.flavour}</p>
+        ${system.tags.includes('indial') ? '<p><i class="fas fa-phone-square"></i> <strong>Indial</strong>: connect directly from your rig</p>' : ''}
         <ul class="connections">connections will go here</ul>
       </div>
     `;

@@ -146,3 +146,7 @@ body {
 .hacker-net-system.active {
   display: block;
 }
+
+#hacker-net-system-select {
+  background-size: cover;
+}

@@ -3,6 +3,7 @@
     "type": "system",
     "system": {
       "name": "Demonic Internet",
+      "flavour": "One of Britain's oldest ISPs, spun out from a software company and a network-geek household name until their service began to be merged into Vaderfone's broadband offering. Their company number and phone numbers all end '666'.",
       "tags": ["indial"],
       "security": [{ "type": "password", "strength": 9 }],
       "style": "background: #ffffff; color: #ff0000;"
@@ -13,6 +14,7 @@
     "type": "system",
     "system": {
       "name": "Virginal Broadband",
+      "flavour": "High-speed cable Internet access provider. Rumours that actual virgins are sacrified by the management team are as false as the claim that their monitoring software spies on your every online movement.",
       "tags": ["indial", "easy"],
       "security": [{ "type": "password", "strength": 7 }],
       "style": "background: #322332; color: #ff0000;"
@@ -23,6 +25,7 @@
     "type": "system",
     "system": {
       "name": "A. O. Hell.",
+      "flavour": "The world's biggest provider of floppy disks and CDs destined to be used as placemats, more-famous recently for the hack which exposed the entire search history of 650,000 of its users.",
       "tags": ["indial", "easy"],
       "security": [{ "type": "password", "strength": 7 }],
       "style": "background: #f9f9fa; color: #000000;"
@@ -33,6 +36,7 @@
     "type": "system",
     "system": {
       "name": "Beaty Broadband",
+      "flavour": "Spun-off from the UK's national telecommunications agency, Beaty's focus is on selling services to business customers and firmly toeing the lines dictated by Inhibiting Web Fun and Cypher School.",
       "tags": ["indial"],
       "security": [{ "type": "password", "strength": 9 }],
       "style": "background: #ffffff; color: #049cd7;"
@@ -43,6 +47,7 @@
     "type": "system",
     "system": {
       "name": "Arnold & Arnold",
+      "flavour": "Long-running independent geek-oriented ISP providing high-availability, censorship-free Internet access and XKCD806-compliant technical support to customers who don't mind that simply having an account puts them on Cypher School's watchlist.",
       "tags": ["indial"],
       "security": [{ "type": "password", "strength": 10 }],
       "style": "background: #ffffff; color: #0d007f;"
@@ -52,7 +57,30 @@
   {
     "type": "system",
     "system": {
+      "name": "Inhibiting Web Fun",
+      "flavour": "Quango comprised of a mixture of knee-jerk censors and fun police whose efforts to categorise exactly what is and is-not acceptable content on the Internet and make a \"naughty list\" which they ocassionally misplace.",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 14 }],
+      "style": "background: #ffffff; color: #9e150e;"
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
+      "name": "Cypher School",
+      "flavour": "What do you mean, you don't believe that our big doughnut-shaped building is a school? Fine, you got us: we're really an acronym factory. Now move along, citizen: nothing to see here.",
+      "tags": [],
+      "security": [{ "type": "password", "strength": 14 }],
+      "style": "background: #ffffff; color: #0f207a;"
+    }
+  },
+
+  {
+    "type": "system",
+    "system": {
       "name": "Everything Everytime",
+      "flavour": "Monolithic mobile telecommunications provider well-known for providing great 4G coverage at reasonable prices, thanks to their money-saving 'sell all your data to market researchers' strategy.",
       "tags": [],
       "security": [{ "type": "password", "strength": 9 }],
       "style": "background: #007b85; color: #ffffff;"
@@ -63,6 +91,7 @@
     "type": "system",
     "system": {
       "name": "Tea-Mobile",
+      "flavour": "Evolved out of the UK's first GSM-1800 mobile telecommunications network, Tea-Mobile's failure to invest in infrastructural growth has always left them as an underdog in the mobile world.",
       "tags": [],
       "security": [{ "type": "password", "strength": 9 }],
       "style": "background: #fe00b8; color: #ffffff;"
@@ -73,6 +102,7 @@
     "type": "system",
     "system": {
       "name": "Vaderfone",
+      "flavour": "Named as part of a marketing deal with a major film series, Vaderfone sells high-speed cellular data contracts with no commitment to honour their prices. When they alter the deal, you should pray they do not alter it any further...",
       "tags": [],
       "security": [{ "type": "password", "strength": 8 }],
       "style": "background: #e60000; color: #ffffff;"
@@ -83,6 +113,7 @@
     "type": "system",
     "system": {
       "name": "DatingCupid",
+      "flavour": "What happens when a bunch of students best-known for putting silly online personality quizzes make a dating site? DatingCupid, where you've a hundred gender choices and a hundred percent chance of unwittingly being the subject of a social experiment.",
       "tags": [],
       "security": [{ "type": "password", "strength": 8 }],
       "style": "background: #f3f5f9; color: #104da1;"
@@ -93,6 +124,7 @@
     "type": "system",
     "system": {
       "name": "Equifux",
+      "flavour": "We collect personal information about everybody who's ever entered into a credit agreement, and make it available to the world. Well, not to the world, just to people who pay us... except that one time that we made a security boo-boo. And that other time. And that other, other time...",
       "tags": ["easy"],
       "security": [{ "type": "password", "strength": 7 }],
       "style": "background: #ffffff; color: #b20837;"
@@ -103,6 +135,7 @@
     "type": "system",
     "system": {
       "name": "Net-flicks",
+      "flavour": "The DVD rental company who turned into a media streaming giant, taking us from the era of 100-channels-and-nothing-on to the era of 100-suggestions-and-they're-all-awful.",
       "tags": [],
       "security": [{ "type": "password", "strength": 9 }],
       "style": "background: #000000; color: #e50913;"
@@ -113,6 +146,7 @@
     "type": "system",
     "system": {
       "name": "Steem",
+      "flavour": "Videogame distribution platform so powerful that it could roll out Half-Life 2 on release day but still not powerful enough to deliver Half-Life 3. Buy in safety, knowing that refunds are available for a short period after purchase (about long enough for the installer to complete).",
       "tags": [],
       "security": [{ "type": "password", "strength": 9 }],
       "style": "background: #0c294a; color: #ffffff;"
@@ -123,8 +157,9 @@
     "type": "system",
     "system": {
       "name": "YourSpace",
+      "flavour": "Pioneering social network platform piggybacking on a domain that was originally intended for a file sharing service and which ended up hosting the homepage of every band you've never heard of.",
       "tags": [],
-      "security": [{ "type": "password", "strength": 8 }],
+      "security": [{ "type": "password", "strength": 7 }],
       "style": "background: #0037c1; color: #ffffff;"
     }
   },
@@ -132,6 +167,7 @@
     "type": "system",
     "system": {
       "name": "Mashley Addison",
+      "flavour": "Online matchmaking service supporting the long-neglected community of infidelity fans. You can pay to close your account, but that won't stop it turning up later when hackers break in; hope that's okay?",
       "tags": ["easy"],
       "security": [{ "type": "password", "strength": 6 }],
       "style": "background-image: url(data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAeAAD/4QMraHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/Pg0KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPg0KCTxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+DQoJCTxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjA3RkM0Q0ZCQUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjA3RkM0Q0ZDQUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIj4NCgkJCTx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA3RkM0Q0Y5QUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjA3RkM0Q0ZBQUQzQzExRTg4RkZCOEI4OTVDQTI0RjkzIi8+DQoJCTwvcmRmOkRlc2NyaXB0aW9uPg0KCTwvcmRmOlJERj4NCjwveDp4bXBtZXRhPg0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDw/eHBhY2tldCBlbmQ9J3cnPz7/7gAOQWRvYmUAZMAAAAAB/9sAhAAQCwsLDAsQDAwQFw8NDxcbFBAQFBsfFxcXFxcfHhcaGhoaFx4eIyUnJSMeLy8zMy8vQEBAQEBAQEBAQEBAQEBAAREPDxETERUSEhUUERQRFBoUFhYUGiYaGhwaGiYwIx4eHh4jMCsuJycnLis1NTAwNTVAQD9AQEBAQEBAQEBAQED/wAARCABRAIQDASIAAhEBAxEB/8QAZQAAAwEBAQEAAAAAAAAAAAAAAAEDAgQFBgEBAQEBAQAAAAAAAAAAAAAAAQIAAwQQAQEAAwEAAwADAAAAAAAAAAABEQISAyEiE0FRBBEBAQEAAwEAAAAAAAAAAAAAAAERIQISMf/aAAwDAQACEQMRAD8A+u5LlXBfDz49PpK6MXReyFZBYZ2QuhcLWQsQYr0jdGfzXuGcwYfSX5n+amYMxsh2sfkV8ZVOofUbINrj9P8AM5t/Cx6lsqXppKL1ip3rzLrhjbX4dfp54qO2qcXuuPj7B0cfILPe/Qv0TmtbmtdNrhkPsdDkcty3BdM3Zrkrox4Q33sYnqp66Yjj33xthz7WxnZN8nmp+H2i/BnKtieaM1TgcHG2MZoypwV1bG2Of01y5ttXbvq5t9RYqVHkN4AL2OD5O7RPb0jtw802tfBfCV9B2NV5quIMRObn23DZWPefWvK9c9vT9rmODfzt3y5d/qpHT/knxHZhzf55zHT1F9fgujBC7M3YtDDF2LoarD2iHpot0zt8gzhyc/YK8fYDDro39kv0tqV2ta0O0zrJHRrMtcl51VUiLeU8NSHhqQ4m1O6ZTvjMunBWDy07ITXB/Kl1LkYdTzStqnJcth2J3LNtV4K6DFSxLJyndCkwxtjeJjIL+AUIYajWCwMXqmlwpNkJcD9MHU2a6Zs3NnH+0anvP7PoXpXXksuee8/s/wBodT5q2QlPWNTeM2N4GCmzWWBYGDDMxdWLqpU9qKqDHwGew2tlYKgMqM1PYBNXGKUABajcAKWtVdQDE1XVuAKiK0VAYM1LcAVUT/kAJW//2Q==); color: #000000;"
